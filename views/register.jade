@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  ul.errors
+   if errors
+     each error, i in errors
+       .alert.alert-dismissible.alert-danger
+          button.close(type='button', data-dismiss='alert') ×
+          #{error.msg}
+  .container.well.col-lg-4.col-lg-offset-4.register
+    form.form-horizontal(action='#', method='post')
+      fieldset
+        legend.head #{title}
+        .form-group
+          label.col-md-2.control-label(for='name') Name
+          .col-md-10
+            input#name.form-control(type='text', placeholder='Name', name='name')
+        .form-group
+          label.col-md-2.control-label(for='enrollment') Enrollment
+          .col-md-10
+            input#enrollment.form-control(type='text', placeholder='Enrollment Number', name='enrollment')
+        .form-group
+          label.col-md-2.control-label(for='email') Email
+          .col-md-10
+            input#email.form-control(type='email', placeholder='Email', name='email')
+        .form-group
+          label.col-md-2.control-label(for='inputPassword') Password
+          .col-md-10
+            input#inputPassword.form-control(type='password', placeholder='Password', name='password')
+        .form-group
+          label.col-md-2.control-label(for='confirmPassword') Confirm Password
+          .col-md-10
+            input#confirmPassword.form-control(type='password', placeholder='Confirm Password', name='passoword2')
+        .form-group
+          label.col-md-2.control-label(for='profile') Profile
+          .col-md-10
+            input#profile.form-control(type='file', placeholder='Profile Picture', name='profileimage')
+        button.btn.btn-default(type='reset') Cancel
+        button.btn.btn-primary(type='submit', name='submit') Register
