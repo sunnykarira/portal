@@ -6,3 +6,21 @@ body {
 a {
   color: #00B7FF;
 }
+
+/*Login form */
+
+.login{
+	margin-top:130px;
+}
+
+.login .head{
+	text-align: center;
+}
+
+.register{
+	margin-top: 60px;
+}
+
+.register .head{
+	text-align: center;
+}

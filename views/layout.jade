@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title= title
+    title Portal: #{title}
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-material-design.css')
@@ -24,9 +24,9 @@ html
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul.nav.navbar-nav
             li
-              a(href='javascript:void(0)') Login
+              a(href='/users/login') Login
             li
-              a(href='javascript:void(0)') Register
+              a(href='/users/register') Register
           form.navbar-form.navbar-left
             .form-group
               input.form-control.col-md-8(type='text', placeholder='Search')
@@ -44,6 +44,7 @@ html
                 li
                   a(href='javascript:void(0)') Logout
 
+    
     block content
 
 
