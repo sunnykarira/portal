@@ -8,16 +8,16 @@ block content
             button.close(type='button', data-dismiss='alert') ×
             #{error.msg}
   .container.well.col-lg-4.col-lg-offset-4.login
-    form.form-horizontal(action='#', method='post', enctype='multipart/form-data')
+    form.form-horizontal(action='login', method='post', enctype='multipart/form-data')
       fieldset
         legend.head #{title}
         .form-group
-          label.col-md-2.control-label(for='enrollemnt') Enrollment
+          label.col-md-2.control-label(for='enrollment') Enrollment
           .col-md-10
-            input#enrollment.form-control(type='text', placeholder='Enrollment Number')
+            input#enrollment.form-control(type='text', name='enrollment' ,placeholder='Enrollment Number')
         .form-group
           label.col-md-2.control-label(for='inputPassword') Password
           .col-md-10
-            input#inputPassword.form-control(type='password', placeholder='Password')
+            input#inputPassword.form-control(type='password', name='password' ,placeholder='Password')
         button.btn.btn-default(type='reset') Cancel
-        button.btn.btn-primary(type='submit') Submit
+        button.btn.btn-primary(type='submit' name='submit') Submit

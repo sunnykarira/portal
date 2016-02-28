@@ -20,6 +20,11 @@
     "express-session": "*",
     "express-messages": "*",
     "multer": "~0.1.8",
-    "moment": "*"
+    "moment": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "bcrypt": "*",
+    "mongoskin": "~1.3.20"
   }
 }

@@ -6,9 +6,9 @@ block content
      each error, i in errors
        .alert.alert-dismissible.alert-danger
           button.close(type='button', data-dismiss='alert') ×
-          #{error.msg}
-  .container.well.col-lg-4.col-lg-offset-4.register
-    form.form-horizontal(action='#', method='post')
+          a #{error.msg}
+  .container.well.col-lg-6.col-lg-offset-3.register
+    form.form-horizontal(action='register', method='post')
       fieldset
         legend.head #{title}
         .form-group
@@ -30,10 +30,10 @@ block content
         .form-group
           label.col-md-2.control-label(for='confirmPassword') Confirm Password
           .col-md-10
-            input#confirmPassword.form-control(type='password', placeholder='Confirm Password', name='passoword2')
+            input#confirmPassword.form-control(type='password', placeholder='Confirm Password', name='password2')
         .form-group
           label.col-md-2.control-label(for='profile') Profile
           .col-md-10
             input#profile.form-control(type='file', placeholder='Profile Picture', name='profileimage')
-        button.btn.btn-default(type='reset') Cancel
+        
         button.btn.btn-primary(type='submit', name='submit') Register
