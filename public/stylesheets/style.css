@@ -24,3 +24,9 @@ a {
 .register .head{
 	text-align: center;
 }
+
+/*Errors */
+.errors{
+	margin-top: 30px;
+	margin-bottom: -10px;
+}
