@@ -12,13 +12,15 @@ var cookieParser = require('cookie-parser');
 
 //Custom
 var session = require('express-session');
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
 //
 
 var bodyParser = require('body-parser');
 
 //Custom
 var mongo = require('mongodb');
-var db = require('monk')('localhost/nodeblog');
+var db = require('monk')('localhost/portal');
 var multer = require('multer');
 var flash = require('connect-flash');
 //
@@ -78,7 +80,7 @@ app.use(expressValidator({
 }));
 //
 
-
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Custom
