@@ -2,64 +2,74 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-
-//Custom
-var expressValidator = require('express-validator');
-//
-
-
 var cookieParser = require('cookie-parser');
+//var bodyParser = require('body-parser');
 
-//Custom
+//require modules
+var expressValidator = require('express-validator');
 var session = require('express-session');
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-//
 
 var bodyParser = require('body-parser');
-
-//Custom
-var mongo = require('mongodb');
-var db = require('monk')('localhost/portal');
+// File upload helper
 var multer = require('multer');
 var flash = require('connect-flash');
-//
 
+// Mongo stuff
+var mongo = require('mongodb');
+//var mongoose = require('mongoose');
+//var db = mongoose.connection;
+var db = require('monk')('localhost/ideation');
+// require passport and local startegy
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+
+//Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
+//var posts = require('./routes/posts');
+//var categories = require('./routes/categories');
 
 var app = express();
 
+//Moment
 app.locals.moment = require('moment');
+
+//Global function so that some text is shown in front end
+app.locals.truncateText = function(text, length){
+  var truncatedText = text.substring(0, length);
+  return truncatedText;
+}
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-//Custom
-//Handle File Uploads and Multipart Data
-app.use(multer({dest: './public/images/uploads'}));
-//
+
+//Middlwares custom
+// handle file uploads
+app.use(multer({dest:'./public/images/uploads'}));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 
-//Custom
-//Express Session
-// If a production application do not use secret
+//Middlwares custom
+//Handle express sessions
 app.use(session({
-  secret: 'secret',
-  saveUnitialized: true,
+  secret:'secret',
+  saveUninitialize: true,
   resave: true
 }));
 
-//Express validator
-// so that we have nice and pretty messages
+// Passport session is  after express session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Validator
 app.use(expressValidator({
 
   errorFormattor: function(param, msg, value){
@@ -78,37 +88,40 @@ app.use(expressValidator({
     };
   }
 }));
+
 //
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Custom
-//Connect Flash so that we get a message over a session
+// connect flash
 app.use(flash());
 app.use(function (req, res, next){
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
+//
+
+//Make db accesible to our router
+app.use(function(req, res, next){
+  req.db = db;
+  //console.log(req.db);
+  next();
+});
+
+//
 
 //User available at all pages
 app.get('/*', function(req, res, next){
   res.locals.user = req.user || null;
   next();
 });
-
-//Make db accesible to our router
-app.use(function(req, res, next){
-  req.db = db;
-  next();
-});
-
 //
-
-
 
 app.use('/', routes);
 app.use('/users', users);
+//app.use('/posts', posts);
+//app.use('/categories', categories);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,15 +1,16 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect('mongodb://localhost/portal');
+mongoose.connect('localhost/ideation');
 
 var db = mongoose.connection;
 
 
 // User Schema
 var UserSchema = mongoose.Schema({
-	enrollment: {
-		type: String
+	username: {
+		type: String,
+		index: true
 	},
 	password: {
 		type: String, 
@@ -42,8 +43,8 @@ module.exports.createUser = function(newUser, callback){
 	
 }
 
-module.exports.getUserByEnrollment = function (enrollment, callback){
-	var query = {enrollment: enrollment};
+module.exports.getUserByUsername = function (username, callback){
+	var query = {username: username};
 	User.findOne(query, callback);
 }
 

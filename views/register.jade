@@ -8,7 +8,7 @@ block content
           button.close(type='button', data-dismiss='alert') ×
           a #{error.msg}
   .container.well.col-lg-6.col-lg-offset-3.register
-    form.form-horizontal(action='register', method='post')
+    form.form-horizontal(action='register', method='post' , enctype='multipart/form-data')
       fieldset
         legend.head #{title}
         .form-group
@@ -18,7 +18,7 @@ block content
         .form-group
           label.col-md-2.control-label(for='enrollment') Enrollment
           .col-md-10
-            input#enrollment.form-control(type='text', placeholder='Enrollment Number', name='enrollment')
+            input#enrollment.form-control(type='text', placeholder='Enrollment Number', name='username')
         .form-group
           label.col-md-2.control-label(for='email') Email
           .col-md-10

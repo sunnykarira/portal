@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
 
-
+//var User = require('../models/user.js');
 var mongo = require('mongodb');
 var User = require('../models/user.js');
-var db = require('monk')('localhost/portal');
+var db = require('monk')('localhost/ideation');
 
 // require passport and local startegy
 var passport = require('passport');
@@ -16,31 +16,24 @@ var localStrategy = require('passport-local').Strategy;
   res.send('respond with a resource');
 });*/
 
-// GET /users/login
-router.get('/login', function(req, res){
-	res.render('login', {
-		title: "Login"
-	});
-});
 
-
-
-
-// GET /users/register
-router.get('/register', function (req, res){
+router.get('/register', function(req, res, next){
 	res.render('register', {
-		title: "Register"
+		'title': 'Register'
 	});
-
 });
 
+router.get('/login', function(req, res, next){
+	res.render('login', {
+		'title': 'Login'
+	});
+});
 
-// POST /users/login
 router.post('/register', function (req, res,next){
 	//Get the form values
 	var name = req.body.name;
 	var email = req.body.email;
-	var enrollment = req.body.enrollment;
+	var username = req.body.username;
 	var password = req.body.password;
 	var password2 = req.body.password2;
 
@@ -58,7 +51,7 @@ router.post('/register', function (req, res,next){
 		var profileImageSize = req.files.profileimage.size;
 	}else{
 		//Set a default image
-		var profileImageName = 'noimage.png';
+		var profileImageName = 'noImage.png';
 	}
 
 	//Form Validation
@@ -66,7 +59,7 @@ router.post('/register', function (req, res,next){
 	req.checkBody('name', 'Name field is required').notEmpty();
 	req.checkBody('email', 'Email field is required').notEmpty();
 	req.checkBody('email', 'Email not valid').isEmail();
-	req.checkBody('enrollment', 'Enrollment Number is required').notEmpty();
+	req.checkBody('username', 'Username field is required').notEmpty();
 	req.checkBody('password', 'Password field is required').notEmpty();
 	req.checkBody('password2', 'Password do not match').equals(req.body.password);
 
@@ -78,7 +71,7 @@ router.post('/register', function (req, res,next){
 			errors: errors,
 			name: name,
 			email: email,
-			enrollment: enrollment,
+			username: username,
 			password: password,
 			password2: password2
 		});
@@ -87,7 +80,7 @@ router.post('/register', function (req, res,next){
 		var newUser = new User({
 			name: name,
 			email: email,
-			enrollment: enrollment,
+			username: username,
 			password: password,
 			profileimage: profileImageName
 		});
@@ -124,8 +117,8 @@ passport.deserializeUser(function(id, done){
 passport.use(new localStrategy(
 
 		// username, password, callback
-	function(enrollment, password, done){
-		User.getUserByEnrollment(enrollment, function(err, user){
+	function(username, password, done){
+		User.getUserByUsername(username, function(err, user){
 			if(err) throw err;
 			if(!user){
 				console.log('Unknown User');
@@ -153,9 +146,10 @@ passport.use(new localStrategy(
 //Post login route
 router.post('/login', passport.authenticate('local', {
 	failureRedirect:'/users/login',
-	failureFlash:'Invalid Enrollment or Password'
+	failureFlash:'Invalid Username or Password'
 }), function (req, res, next){
 	console.log('Authentication Successful');
+	console.log(req);
 	req.flash('success', 'You are logged in');
 	res.location('/');
 	res.redirect('/');
@@ -169,4 +163,8 @@ router.get('/logout', function (req, res, next){
 	res.redirect('/');
 });
 
+
 module.exports = router;
+
+
+
