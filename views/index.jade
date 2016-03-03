@@ -1,5 +1,108 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  nav.navbar.navbar-default.navbar-fixed-top.sidebar(role='navigation')
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-sidebar-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='#') Brand
+        // Collect the nav links, forms, and other content for toggling
+        #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='#')
+                | Home
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-home(style='font-size:16px;')
+            li
+              a(href='#')
+                | Elective Selection
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
+            li
+              a(href='#')
+                | Feedback
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
+            li.dropdown
+              a.dropdown-toggle(href='#', data-toggle='dropdown')
+                | Settings 
+                span.caret
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-cog(style='font-size:16px;')
+              ul.dropdown-menu.forAnimate(role='menu')
+                li
+                  a(href='#') Action
+                li
+                  a(href='#') Another action
+                li
+                  a(href='#') Something else here
+                li.divider
+                li
+                  a(href='#') Separated link
+                li.divider
+                li
+                  a(href='#') One more separated link
+  !=messages()
+  .container.text-center.profile
+      |   
+      .row
+        .col-md-4.col-sm-6.col-xs-12
+          .text-center
+            img.avatar.img-circle.img-thumbnail(src='/images/uploads/')         
+        // edit form column
+        .col-md-8.col-sm-6.col-xs-12.personal-info
+          h3 Personal info
+          |       
+          form.form-horizontal(method='post', action='updateprofile', enctype='multipart/form-data')
+            .form-group
+              h6 Upload a different photo...
+              |         
+              input.text-center.center-block.well.well-sm(name='profileimage', type='file')
+            .form-group
+              label.col-lg-3.control-label Name
+              |           
+              .col-lg-8
+                input.form-control(value='#{}', type='text', name='name')
+            |         
+            .form-group
+              label.col-lg-3.control-label Email:
+              |           
+              .col-lg-8
+                input.form-control(value='#{}', readonly, type='email', name='email')
+            |         
+            .form-group
+              label.col-md-3.control-label Enrollment:
+              |           
+              .col-md-8
+                input.form-control(placeholder='#{}' value="#{}", readonly, type='text', name='username')
+            .form-group
+              label.col-md-3.control-label Semester:
+              |           
+              .col-md-8
+                input.form-control(placeholder='#{}' value="#{}", readonly, type='text', name='semester')
+            |         
+            .form-group
+              label.col-md-3.control-label Password:
+              |           
+              .col-md-8
+                input.form-control(placeholder='********', type='password', name='password')
+            |         
+            .form-group
+              label.col-md-3.control-label Confirm password:
+              |           
+              .col-md-8
+                input.form-control(placeholder='********', type='password', name='password2')
+            |         
+            .form-group
+              label.col-md-3.control-label
+              |           
+              .col-md-8
+                input.btn.btn-primary(value='Save Changes', type='Submit', name='submit')
+                |             
+                span
+                |             
+                input.btn.btn-default(value='Cancel', type='reset')
+                
+  
