@@ -186,3 +186,14 @@ a {
 	section{
 		padding-left: 15px;
 	}
+
+
+/* Profile Page */
+.profile{
+	margin-top: 10px;
+}
+
+.profile .image{
+	margin-top: 250px;
+	margin-bottom: 10px;
+}
