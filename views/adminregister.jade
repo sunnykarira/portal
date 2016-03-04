@@ -1,4 +1,4 @@
-extends layout
+extends adminlayout
 
 block content
   ul.errors
@@ -16,10 +16,6 @@ block content
           .col-md-10
             input#name.form-control(type='text', placeholder='Name', name='name')
         .form-group
-          label.col-md-2.control-label(for='enrollment') Enrollment
-          .col-md-10
-            input#enrollment.form-control(type='text', placeholder='Enrollment Number', name='username')
-        .form-group
           label.col-md-2.control-label(for='email') Email
           .col-md-10
             input#email.form-control(type='email', placeholder='Email', name='email')
@@ -31,9 +27,5 @@ block content
           label.col-md-2.control-label(for='confirmPassword') Confirm Password
           .col-md-10
             input#confirmPassword.form-control(type='password', placeholder='Confirm Password', name='password2')
-        .form-group
-          label.col-md-2.control-label(for='profile') Profile
-          .col-md-10
-            input#profile.form-control(type='file', placeholder='Profile Picture', name='profileimage')
         button.btn.btn-primary(type='reset') Reset
         button.btn.btn-primary(type='submit', name='submit') Register
