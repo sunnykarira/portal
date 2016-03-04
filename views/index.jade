@@ -45,12 +45,13 @@ block content
                 li
                   a(href='#') One more separated link
   !=messages()
-  .container.text-center.profile
+  .container.text-center.profile.well
       |   
       .row
-        .col-md-4.col-sm-6.col-xs-12
+        .col-md-4.col-sm-6.col-xs-12.image
           .text-center
-            img.avatar.img-circle.img-thumbnail(src='/images/uploads/')         
+            img.avatar.img-circle.img-thumbnail(src='/images/uploads/noimage.jpg')
+            h6 =title         
         // edit form column
         .col-md-8.col-sm-6.col-xs-12.personal-info
           h3 Personal info
@@ -64,13 +65,13 @@ block content
               label.col-lg-3.control-label Name
               |           
               .col-lg-8
-                input.form-control(value='#{}', type='text', name='name')
+                input.form-control(value='#{}', readonly, type='text', name='name')
             |         
             .form-group
               label.col-lg-3.control-label Email:
               |           
               .col-lg-8
-                input.form-control(value='#{}', readonly, type='email', name='email')
+                input.form-control(value='#{}', type='email', name='email')
             |         
             .form-group
               label.col-md-3.control-label Enrollment:

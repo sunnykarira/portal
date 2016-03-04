@@ -149,7 +149,6 @@ router.post('/login', passport.authenticate('local', {
 	failureFlash:'Invalid Username or Password'
 }), function (req, res, next){
 	console.log('Authentication Successful');
-	console.log(req);
 	req.flash('success', 'You are logged in');
 	res.location('/');
 	res.redirect('/');
@@ -159,8 +158,8 @@ router.post('/login', passport.authenticate('local', {
 router.get('/logout', function (req, res, next){
 	req.logout();
 	req.flash('success', 'You have logged out successfully');
-	res.location('/');
-	res.redirect('/');
+	res.location('/home');
+	res.redirect('/home');
 });
 
 
