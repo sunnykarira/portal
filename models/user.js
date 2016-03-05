@@ -1,16 +1,22 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
-mongoose.connect('localhost/ideation');
+//mongoose.connect('localhost/portal');
 
 var db = mongoose.connection;
 
 
 // User Schema
 var UserSchema = mongoose.Schema({
+	type:{
+		type: String
+	},
 	username: {
 		type: String,
 		index: true
+	},
+	semester:{
+		type: String
 	},
 	password: {
 		type: String, 
