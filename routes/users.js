@@ -1,20 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcrypt');
+var moment = require('moment');
 
-//var User = require('../models/user.js');
+
 var mongo = require('mongodb');
 var User = require('../models/user.js');
-var db = require('monk')('localhost/ideation');
+var db = require('monk')('localhost/portal');
 
 // require passport and local startegy
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
-
-/* GET users listing. */
-/*router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});*/
 
 
 router.get('/register', function(req, res, next){
@@ -77,9 +73,26 @@ router.post('/register', function (req, res,next){
 		});
 	}else{
 
+		var str = username.substring(2,4);
+		var now = new Date().toString();
+		var curr_month = now.substring(8,10);
+		var curr_year = now.substring(13,15);
+		var sem_year = Number(curr_year) - Number(str);
+		var semester_month = Number(curr_month);
+		var semester;
+
+		if(semester_month >= 7){
+			semester = sem_year * 2 + 1;
+		}else{
+			semester = sem_year * 2;
+		}
+
+
 		var newUser = new User({
 			name: name,
 			email: email,
+			semester: semester,
+			type: 'normal',
 			username: username,
 			password: password,
 			profileimage: profileImageName

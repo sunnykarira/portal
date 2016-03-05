@@ -16,9 +16,10 @@ var flash = require('connect-flash');
 
 // Mongo stuff
 var mongo = require('mongodb');
-//var mongoose = require('mongoose');
+var mongoose = require('mongoose');
+mongoose.connect('localhost/portal');
 //var db = mongoose.connection;
-var db = require('monk')('localhost/ideation');
+var db = require('monk')('localhost/portal');
 // require passport and local startegy
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
@@ -26,6 +27,7 @@ var localStrategy = require('passport-local').Strategy;
 //Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var admin = require('./routes/admin.js');
 //var posts = require('./routes/posts');
 //var categories = require('./routes/categories');
 
@@ -119,8 +121,8 @@ app.get('/*', function(req, res, next){
 //
 
 app.use('/', routes);
-app.use('/users', users);
-//app.use('/posts', posts);
+app.use('/users',users);
+app.use('/admin',admin);
 //app.use('/categories', categories);
 
 // catch 404 and forward to error handler
