@@ -10,7 +10,7 @@ block content
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Brand
+          
         // Collect the nav links, forms, and other content for toggling
         #bs-sidebar-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
@@ -23,7 +23,7 @@ block content
                 | Students
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
             li
-              a(href='#')
+              a(href='/admin/adminindex/semester')
                 | Students Semester Wise
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li
@@ -54,6 +54,14 @@ block content
                   a(href='#') One more separated link
   !=messages()
   .show
+    if semesters
+      form(method='post', action='semester', enctype="multipart/form-data")
+          .form-group
+            label Semesters
+            select.form-control(name='semester')
+                each semester , i in semesters
+                    option(value='#{semester.title}') B.Tech Semester #{semester.title}
+            input.btn.btn-default(name='submit', type='Submit' value='Show')
     if users
       table.table.table-striped.table-hover.tablestyle
         thead
@@ -70,4 +78,4 @@ block content
              td #{user.semester}
              td #{user.email}
     else
-      p No students to display
+      p(align='center') No Users to display
