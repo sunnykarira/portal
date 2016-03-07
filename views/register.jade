@@ -20,6 +20,12 @@ block content
           .col-md-10
             input#enrollment.form-control(type='text', placeholder='Enrollment Number', name='username')
         .form-group
+          label.col-md-2.control-label(for='branch') Branch
+          .col-md-10
+            select#branch.form-control(name='branch')
+               option(value='CSE') CSE
+               option(value='ECE') ECE
+        .form-group
           label.col-md-2.control-label(for='email') Email
           .col-md-10
             input#email.form-control(type='email', placeholder='Email', name='email')
