@@ -127,8 +127,31 @@ router.get('/adminindex/students', function(req, res, next){
 	});
 });
 
+router.get('/adminindex/semester', function(req, res, next){
+		var semesters = db.get('semester');
+		semesters.find({},{}, function(err, semesters){
+			res.render('adminindex', {
+				title: 'Admin Index',
+				semesters: semesters 
+			});
+		});
+
+});
+
+router.post('/adminindex/semester', function(req, res, next){
+		var semester = req.body.semester;
+		var users = db.get('users');
+		users.find({semester: semester}, {} , function(err, users){
+			res.render('adminindex', {
+				title: 'Admin Index',
+				users: users
+			});
+		});
+});
+
 
 router.get('/logout', function(req, res, next){
+	admin = undefined;
 	req.logout();
 	res.location('/');
 	res.redirect('/');
