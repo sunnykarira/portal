@@ -11,7 +11,10 @@ var UserSchema = mongoose.Schema({
 	type:{
 		type: String
 	},
-	username: {
+	branch:{
+		type: String
+	},
+	username:{
 		type: String,
 		index: true
 	},
