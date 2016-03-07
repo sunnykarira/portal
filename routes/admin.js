@@ -14,6 +14,10 @@ var localStrategy = require('passport-local').Strategy;
 
 var admin = undefined;
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 router.get('/', function(req, res, next){
 	res.redirect('/admin/login');
 });
@@ -140,13 +144,86 @@ router.get('/adminindex/semester', function(req, res, next){
 
 router.post('/adminindex/semester', function(req, res, next){
 		var semester = req.body.semester;
+		var branch = req.body.branch;
 		var users = db.get('users');
-		users.find({semester: semester}, {} , function(err, users){
-			res.render('adminindex', {
-				title: 'Admin Index',
-				users: users
+
+		if(!branch){
+			users.find({semester: semester}, {} , function(err, users){
+				res.render('adminindex', {
+					title: 'Admin Index',
+					users: users
+				});
 			});
+		}else{
+			users.find({semester: semester, branch: branch}, {} , function(err, users){
+				res.render('adminindex', {
+					title: 'Admin Index',
+					users: users,
+					branch: branch
+				});
+			});
+		}
+});
+
+
+router.get('/adminindex/teacher', function(req, res, next){
+	var teachers = db.get('teacher');
+	teachers.find({}, {}, function(err, teachers){
+		//console.log(teachers);
+		res.render('adminaddteacher', {
+		title: 'Admin AddTeacher',
+		teachers: teachers
+
 		});
+	});
+
+});
+
+
+router.post('/adminindex/teacher', function(req, res, next){
+	var title = req.body.title;
+	var branch = req.body.branch;
+	console.log(title + '   ' + branch);
+	req.checkBody('title', 'Title Field is required').notEmpty();
+	req.checkBody('branch', 'Branch Field is required').notEmpty();
+	var errors = req.validationErrors();
+
+	var teachers;
+	
+	if(errors){
+		res.render('adminaddteacher', {
+			"errors": errors,
+			"title": title
+		});
+	}else{
+		teachers = db.get('teacher');
+	}
+
+	title = title.toLowerCase();
+	title = capitalizeFirstLetter(title);
+
+	teachers.find({'title': title, 'branch': branch}, {}, function(err, teacher){
+			if(err) throw err;
+			if(teacher.length != 0){
+				req.flash('info', 'Teacher already exists, try submitting another teacher');
+				res.redirect('/admin/adminindex/teacher');
+			}else{
+				//Submit to db
+				teachers.insert({
+				"title": title,
+				"branch": branch
+				}, function (err, teacher){
+				if(err){
+					res.send('There was an issue adding the teacher');
+				}else{
+				req.flash('success','Teacher submitted');
+				res.location('/admin/adminindex/teacher');
+				res.redirect('/admin/adminindex/teacher');
+				}
+				});
+			}
+	});
+
 });
 
 

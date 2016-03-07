@@ -29,6 +29,7 @@ router.post('/register', function (req, res,next){
 	//Get the form values
 	var name = req.body.name;
 	var email = req.body.email;
+	var branch = req.body.branch;
 	var username = req.body.username;
 	var password = req.body.password;
 	var password2 = req.body.password2;
@@ -67,6 +68,7 @@ router.post('/register', function (req, res,next){
 			errors: errors,
 			name: name,
 			email: email,
+			branch: branch,
 			username: username,
 			password: password,
 			password2: password2
@@ -92,6 +94,7 @@ router.post('/register', function (req, res,next){
 			name: name,
 			email: email,
 			semester: semester,
+			branch: branch,
 			type: 'normal',
 			username: username,
 			password: password,
