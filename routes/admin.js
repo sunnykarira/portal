@@ -227,6 +227,25 @@ router.post('/adminindex/teacher', function(req, res, next){
 });
 
 
+router.get('/adminindex/course', function(req, res, next){
+	var courses = db.get('course');
+	var teachers = db.get('teacher');
+	courses.find({}, {}, function(err, courses){
+		//console.log(teachers);
+		teachers.find({}, {}, function(err, teachers){
+			res.render('adminaddcourse', {
+			title: 'Admin AddCourse',
+			courses: courses,
+			teachers: teachers
+
+			});
+		});
+		
+	});
+
+});
+
+
 router.get('/logout', function(req, res, next){
 	admin = undefined;
 	req.logout();
