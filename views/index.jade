@@ -50,13 +50,13 @@ block content
       .row
         .col-md-4.col-sm-6.col-xs-12.image
           .text-center
-            img.avatar.img-circle.img-thumbnail(src='/images/uploads/noimage.jpg')
-            h6 =title         
+            img.avatar.img-circle.img-thumbnail(src='/images/uploads/#{user.profileimage}')
+            h6 #{user.name} ---> #{user.username}         
         // edit form column
         .col-md-8.col-sm-6.col-xs-12.personal-info
           h3 Personal info
           |       
-          form.form-horizontal(method='post', action='updateprofile', enctype='multipart/form-data')
+          form.form-horizontal(method='post', action='/', enctype='multipart/form-data')
             .form-group
               h6 Upload a different photo...
               |         
@@ -65,29 +65,29 @@ block content
               label.col-lg-3.control-label Name
               |           
               .col-lg-8
-                input.form-control(value='#{}', readonly, type='text', name='name')
+                input.form-control(value='#{user.name}', readonly, type='text', name='name')
             |         
             .form-group
               label.col-lg-3.control-label Email:
               |           
               .col-lg-8
-                input.form-control(value='#{}', type='email', name='email')
+                input.form-control(type='email', name='email', placeholder='#{user.email}')
             |         
             .form-group
               label.col-md-3.control-label Enrollment:
               |           
               .col-md-8
-                input.form-control(placeholder='#{}' value="#{}", readonly, type='text', name='username')
+                input.form-control(placeholder='#{user.username}' value="#{user.username}", readonly, type='text', name='username')
             .form-group
               label.col-md-3.control-label Branch:
               |           
               .col-md-8
-                input.form-control(placeholder='#{}' value="#{}", readonly, type='text', name='branch')
+                input.form-control(placeholder='#{user.branch}' value="#{user.branch}", readonly, type='text', name='branch')
             .form-group
               label.col-md-3.control-label Semester:
               |           
               .col-md-8
-                input.form-control(placeholder='#{}' value="#{}", readonly, type='text', name='semester')
+                input.form-control(placeholder='#{user.semester}' value="#{user.semester}", readonly, type='text', name='semester')
             |         
             .form-group
               label.col-md-3.control-label Password:

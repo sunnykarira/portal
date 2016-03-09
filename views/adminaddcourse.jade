@@ -65,6 +65,11 @@ block content
                 label Course Name:
                 input.form-control(name='title', type='text')
             .form-group
+                label Semester:
+                select.form-control(name='semester')
+                  each semester, i in semesters
+                    option(value='#{semester.title}') #{semester.title}
+            .form-group
                 label Teacher
                 select.form-control(name='teacher')
                   each teacher , i in teachers
@@ -84,6 +89,7 @@ block content
               th Id
               th Course Id
               th Course Name
+              th Semester
               th Teacher
               th Branch
            tbody
@@ -92,5 +98,6 @@ block content
                td #{course._id}
                td #{course.number}
                td #{course.title}
+               td #{course.semester}
                td #{course.teacher}
                td #{course.branch}
