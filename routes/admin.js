@@ -245,6 +245,60 @@ router.get('/adminindex/course', function(req, res, next){
 
 });
 
+router.post('/adminindex/course', function(req, res, next){
+	var number = req.body.number;
+	var title = req.body.title;
+	var teacher = req.body.teacher;
+	var branch = req.body.branch;
+	//console.log(title + '   ' + branch);
+	req.checkBody('title', 'Title Field is required').notEmpty();
+	req.checkBody('branch', 'Branch Field is required').notEmpty();
+	req.checkBody('teacher', 'Title Field is required').notEmpty();
+	req.checkBody('number', 'Branch Field is required').notEmpty();
+
+	var errors = req.validationErrors();
+
+	var courses;
+	
+	if(errors){
+		res.render('adminaddteacher', {
+			"errors": errors,
+			"title": title,
+			"number": number
+		});
+	}else{
+		courses = db.get('course');
+	}
+
+	title = title.toLowerCase();
+	title = capitalizeFirstLetter(title);
+
+	courses.find({'title': title, 'number': number, 'branch': branch}, {}, function(err, course){
+			if(err) throw err;
+			if(course.length != 0){
+				req.flash('info', 'Course already exists, try submitting another course');
+				res.redirect('/admin/adminindex/course');
+			}else{
+				//Submit to db
+				courses.insert({
+				"title": title,
+				"branch": branch,
+				"teacher": teacher,
+				"number": number
+				}, function (err, course){
+				if(err){
+					res.send('There was an issue adding the course');
+				}else{
+				req.flash('success','Course submitted');
+				res.location('/admin/adminindex/course');
+				res.redirect('/admin/adminindex/course');
+				}
+				});
+			}
+	});
+
+});
+
 
 router.get('/logout', function(req, res, next){
 	admin = undefined;
