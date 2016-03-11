@@ -114,7 +114,8 @@ router.post('/login', function(req, res, next){
 
 router.get('/adminindex', function(req, res, next){
 	res.render('adminindex', {
-		title: 'Admin Index'
+		title: 'Admin Index',
+		user: admin.name
 	});
 });
 
@@ -230,14 +231,19 @@ router.post('/adminindex/teacher', function(req, res, next){
 router.get('/adminindex/course', function(req, res, next){
 	var courses = db.get('course');
 	var teachers = db.get('teacher');
+	var semesters = db.get('semester');
 	courses.find({}, {}, function(err, courses){
 		//console.log(teachers);
 		teachers.find({}, {}, function(err, teachers){
-			res.render('adminaddcourse', {
-			title: 'Admin AddCourse',
-			courses: courses,
-			teachers: teachers
+			
+			semesters.find({}, {}, function(err, semesters){
+				res.render('adminaddcourse', {
+				title: 'Admin AddCourse',
+				courses: courses,
+				teachers: teachers,
+				semesters: semesters
 
+				});
 			});
 		});
 		
@@ -250,6 +256,7 @@ router.post('/adminindex/course', function(req, res, next){
 	var title = req.body.title;
 	var teacher = req.body.teacher;
 	var branch = req.body.branch;
+	var semester = req.body.semester;
 	//console.log(title + '   ' + branch);
 	req.checkBody('title', 'Title Field is required').notEmpty();
 	req.checkBody('branch', 'Branch Field is required').notEmpty();
@@ -273,7 +280,7 @@ router.post('/adminindex/course', function(req, res, next){
 	title = title.toLowerCase();
 	title = capitalizeFirstLetter(title);
 
-	courses.find({'title': title, 'number': number, 'branch': branch}, {}, function(err, course){
+	courses.find({'title': title, 'number': number, 'branch': branch, 'semester': semester}, {}, function(err, course){
 			if(err) throw err;
 			if(course.length != 0){
 				req.flash('info', 'Course already exists, try submitting another course');
@@ -284,7 +291,8 @@ router.post('/adminindex/course', function(req, res, next){
 				"title": title,
 				"branch": branch,
 				"teacher": teacher,
-				"number": number
+				"number": number,
+				"semester": semester
 				}, function (err, course){
 				if(err){
 					res.send('There was an issue adding the course');
