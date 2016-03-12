@@ -115,5 +115,29 @@ router.post('/', function (req, res, next){
 });
 
 
+router.get('/feedback', function(req, res, next){
+	var user = req.user;
+	var semester = req.user.semester;
+	var branch = req.user.branch;
+
+	var courses = db.get('course');
+	var teachers = db.get('teacher');
+	courses.find({branch: branch,semester: semester}, function(err, courses){
+
+		teachers.find({branch: branch}, function(err, teachers){
+			res.render('feedback', {
+				title: 'Feedback',
+				courses: courses,
+				teachers: teachers
+			});
+
+		});
+	});
+	
+});
+
+
+
+
 
 module.exports = router;
