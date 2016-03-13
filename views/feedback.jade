@@ -56,15 +56,15 @@ block content
             legend(align='center') Feeback Form
             .form-group
                 label Course Number:
-                select.form-control(name='number')
+                select.form-control(name='number' type='text')
                    each course, i in courses
                       option.value(value='#{course.number}') #{course.number} ---> #{course.title}
             .form-group
                 label Semester:
-                input.form-control(name='semester', value='Semester: #{user.semester}', readonly, type='Text')
+                input.form-control(name='semester', value='#{user.semester}', readonly, type='text')
             .form-group
                 label Teacher
-                select.form-control(name='teacher')
+                select.form-control(name='teacher' type='text')
                   each teacher , i in teachers
                      option(value='#{teacher.title}') #{teacher.title} ---> Teacher Branch: #{teacher.branch}
             .form-group
@@ -78,7 +78,7 @@ block content
             legend(align='center') Details
             .form-group
                label Punctuality
-               select.form-control(name='punctuality')
+               select.form-control(name='punctuality', type='text')
                  option(value='5') Outstanding
                  option(value='4') Excellent
                  option(value='3') Good
@@ -86,7 +86,7 @@ block content
                  option(value='1') Poor
             .form-group
                label Delivery of lectures
-               select.form-control(name='delivery')
+               select.form-control(name='delivery', type='text')
                  option(value='5') Outstanding
                  option(value='4') Excellent
                  option(value='3') Good
@@ -94,7 +94,7 @@ block content
                  option(value='1') Outstanding
             .form-group
                label Invoking interest in subject
-               select.form-control(name='interest')
+               select.form-control(name='interest', type='text')
                  option(value='5') Oustanding
                  option(value='4') Excellent
                  option(value='3') Good
@@ -102,7 +102,7 @@ block content
                  option(value='1') Poor
             .form-group
                label Help outside the class
-               select.form-control(name='help')
+               select.form-control(name='help', type='text')
                  option(value='5') Outstanding
                  option(value='4') Excellent
                  option(value='3') Good
@@ -110,7 +110,7 @@ block content
                  option(value='1') Poor
             .form-group
                label Practical aspects of subject
-               select.form-control(name='practical')
+               select.form-control(name='practical', type='text')
                  option(value='5') Outstanding
                  option(value='4') Excellent
                  option(value='3') Good
@@ -118,7 +118,7 @@ block content
                  option(value='1') Poor
             .form-group
                label Quality of answers
-               select.form-control(name='quality')
+               select.form-control(name='quality', type='text')
                  option(value='5') Outstanding
                  option(value='4') Excellent
                  option(value='3') Good
@@ -128,7 +128,7 @@ block content
             .form-group
                   label.col-md-2.control-label(for='textArea') Additional Feedback
                   .col-md-10
-                  textarea#textArea.form-control(rows='3')
+                  textarea#textArea.form-control(rows='3' name='text' , type='text')
                   span.help-block
                       | A longer block of help text that breaks onto a new line and may extend beyond one line.
 
