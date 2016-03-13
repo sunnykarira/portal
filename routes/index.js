@@ -136,7 +136,55 @@ router.get('/feedback', function(req, res, next){
 	
 });
 
+router.post('/feedback', function(req, res, next){
+		//Get the form values
+	var username = req.user.username;
+	var number = req.body.number;
+	var semester = req.body.semester;
+	var teacher = req.body.teacher;
+	var branch = req.body.branch;
+	var punctuality = req.body.punctuality;
+	var delivery= req.body.delivery;
+	var interest = req.body.interest;
+	var practical = req.body.practical;
+	var quality = req.body.quality;
+	var text = req.body.text;
 
+
+	var feedbacks = db.get('feedback');
+
+	feedbacks.find({'username': username,
+		'teacher': teacher,
+		'number': number, 'semester': semester}, {}, function(err, feedback){
+
+		if(err) throw err;
+		console.log(feedback);
+		if(feedback.length != 0){
+			req.flash('info', 'Feedback already submitted');
+			res.redirect('/feedback');
+		}else{
+			feedbacks.insert({
+				'username': username,
+				'number': number,
+				'semester': semester,
+				'branch': branch,
+				'teacher': teacher,
+				'punctuality': punctuality,
+				'delivery': delivery,
+				'interest': interest,
+				'practical': practical,
+				'quality': quality,
+				'text': text
+			}, function(err, feedback){
+				if(err) res.send('There was an issue submitting feedback');
+				req.flash('success', 'Feedback Submitted');
+				res.location('/feedback');
+				res.redirect('/feedback');
+			});
+		}
+	});
+
+});
 
 
 
