@@ -53,7 +53,7 @@ block content
                     li.alert.alert-danger #{error.msg}
         form.well(method='post', action='feedback', enctype="multipart/form-data")
           fieldset
-            legend Feeback Form
+            legend(align='center') Feeback Form
             .form-group
                 label Course Number:
                 select.form-control(name='number')
@@ -71,4 +71,65 @@ block content
                 label.col-md-2.control-label(for='branch') Branch
                 .col-md-10
                    input.form-control(name='branch', value='#{user.branch}', readonly, type='text')
+            br
+            br
+            br
+            br
+            legend(align='center') Details
+            .form-group
+               label Punctuality
+               select.form-control(name='punctuality')
+                 option(value='5') Outstanding
+                 option(value='4') Excellent
+                 option(value='3') Good
+                 option(value='2') Average
+                 option(value='1') Poor
+            .form-group
+               label Delivery of lectures
+               select.form-control(name='delivery')
+                 option(value='5') Outstanding
+                 option(value='4') Excellent
+                 option(value='3') Good
+                 option(value='2') Average
+                 option(value='1') Outstanding
+            .form-group
+               label Invoking interest in subject
+               select.form-control(name='interest')
+                 option(value='5') Oustanding
+                 option(value='4') Excellent
+                 option(value='3') Good
+                 option(value='2') Average
+                 option(value='1') Poor
+            .form-group
+               label Help outside the class
+               select.form-control(name='help')
+                 option(value='5') Outstanding
+                 option(value='4') Excellent
+                 option(value='3') Good
+                 option(value='2') Average
+                 option(value='1') Poor
+            .form-group
+               label Practical aspects of subject
+               select.form-control(name='practical')
+                 option(value='5') Outstanding
+                 option(value='4') Excellent
+                 option(value='3') Good
+                 option(value='2') Average
+                 option(value='1') Poor
+            .form-group
+               label Quality of answers
+               select.form-control(name='quality')
+                 option(value='5') Outstanding
+                 option(value='4') Excellent
+                 option(value='3') Good
+                 option(value='2') Average
+                 option(value='1') Poor
+          
+            .form-group
+                  label.col-md-2.control-label(for='textArea') Additional Feedback
+                  .col-md-10
+                  textarea#textArea.form-control(rows='3')
+                  span.help-block
+                      | A longer block of help text that breaks onto a new line and may extend beyond one line.
+
             input.btn.btn-default(name='submit', type='submit', value='Save')
