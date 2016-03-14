@@ -1,6 +1,7 @@
 extends adminlayout
 
 block content
+  !=messages()
   ul.errors
    if errors
      each error, i in errors

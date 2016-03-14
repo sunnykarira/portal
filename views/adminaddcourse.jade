@@ -56,7 +56,9 @@ block content
      ul.errors
             if errors
                 each error, i in errors
-                    li.alert.alert-danger #{error.msg}
+                    .alert.alert-dismissible.alert-danger
+                        button.close(type='button', data-dismiss='alert') ×
+                              #{error.msg}
         form.well(method='post', action='course', enctype="multipart/form-data")
             .form-group
                 label Course Number:
