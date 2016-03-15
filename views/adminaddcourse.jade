@@ -24,7 +24,7 @@ block content
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
             li
               a(href='/admin/adminindex/semester')
-                | Students Semester Wise
+                | Semester Wise
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li
               a(href='/admin/adminindex/teacher')
@@ -33,6 +33,10 @@ block content
             li
               a(href='/admin/adminindex/course')
                 | Add Course
+                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
+            li
+              a(href='/admin/adminindex/report')
+                | Feedback
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -60,6 +64,7 @@ block content
                         button.close(type='button', data-dismiss='alert') ×
                               #{error.msg}
         form.well(method='post', action='course', enctype="multipart/form-data")
+          legend Add Course
             .form-group
                 label Course Number:
                 input.form-control(name='number', type='text')
