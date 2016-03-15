@@ -308,6 +308,47 @@ router.post('/adminindex/course', function(req, res, next){
 });
 
 
+router.get('/adminindex/report', function(req, res, next){
+	var teachers = db.get('teacher');
+	teachers.find({}, {}, function(err, teachers){
+		res.render('adminfeedbackreport', {
+			title: 'AdminFeedbackReport',
+			teachers: teachers
+		});
+	});
+});
+
+router.post('/adminindex/report', function(req, res, next){
+	var teacher = req.body.teacher;
+	//console.log(teacher);
+	var feedbacks = db.get('feedback');
+
+	var punctuality;
+	var delivery;
+	var interest;
+	var help;
+	var practical;
+	var quality;
+
+	feedbacks.find({teacher: teacher}, {}, function(err, feedbacks){
+		var students = feedbacks.length;
+		//console.log(feedbacks);
+		for(i=0; i <feedbacks.length; i++){
+			// punctuality+= Number(feedbacks[i]."punctuality");
+			// delivery+= Number(feedbacks[i]."delivery");
+			// interest+= Number(feedbacks[i]."interest");
+			// help+=Number(feedbacks[i]."help");
+			// practical+= Number(feedbacks[i]."practical");
+			// quality+= Number(feedbacks[i]."quality");
+			var object = jQuery.parseJSON.parse(feedbacks[i]);
+			console.log(object);
+
+		}
+		console.log(help);
+	});
+});
+
+
 router.get('/logout', function(req, res, next){
 	admin = undefined;
 	req.logout();
