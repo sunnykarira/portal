@@ -143,6 +143,7 @@ router.post('/feedback', function(req, res, next){
 	var semester = req.body.semester;
 	var teacher = req.body.teacher;
 	var branch = req.body.branch;
+	var help = req.body.help;
 	var punctuality = req.body.punctuality;
 	var delivery= req.body.delivery;
 	var interest = req.body.interest;
@@ -166,6 +167,7 @@ router.post('/feedback', function(req, res, next){
 			feedbacks.insert({
 				'username': username,
 				'number': number,
+				'help': help,
 				'semester': semester,
 				'branch': branch,
 				'teacher': teacher,

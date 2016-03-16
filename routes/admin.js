@@ -3,14 +3,15 @@ var router = express.Router();
 var bcrypt = require('bcrypt');
 var moment = require('moment');
 
-
 var mongo = require('mongodb');
 var User = require('../models/user.js');
 var db = require('monk')('localhost/portal');
+var jsonparsesafe = require('json-parse-safe');
 
 // require passport and local startegy
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
+
 
 var admin = undefined;
 
@@ -312,7 +313,6 @@ router.get('/adminindex/report', function(req, res, next){
 	var teachers = db.get('teacher');
 	teachers.find({}, {}, function(err, teachers){
 		res.render('adminfeedbackreport', {
-			title: 'AdminFeedbackReport',
 			teachers: teachers
 		});
 	});
@@ -322,29 +322,46 @@ router.post('/adminindex/report', function(req, res, next){
 	var teacher = req.body.teacher;
 	//console.log(teacher);
 	var feedbacks = db.get('feedback');
+	var teachers = db.get('teacher');
 
-	var punctuality;
-	var delivery;
-	var interest;
-	var help;
-	var practical;
-	var quality;
+	var punctuality = 0;
+	var delivery =0;
+	var interest=0;
+	var help=0;
+	var practical=0;
+	var quality=0;
 
 	feedbacks.find({teacher: teacher}, {}, function(err, feedbacks){
 		var students = feedbacks.length;
 		//console.log(feedbacks);
-		for(i=0; i <feedbacks.length; i++){
-			// punctuality+= Number(feedbacks[i]."punctuality");
-			// delivery+= Number(feedbacks[i]."delivery");
-			// interest+= Number(feedbacks[i]."interest");
-			// help+=Number(feedbacks[i]."help");
-			// practical+= Number(feedbacks[i]."practical");
-			// quality+= Number(feedbacks[i]."quality");
-			var object = jQuery.parseJSON.parse(feedbacks[i]);
-			console.log(object);
+		for(i=0; i < feedbacks.length; i++){
+			
+			var object = feedbacks[i];
+			punctuality+= Number(object.punctuality);
+			delivery+= Number(object.delivery);
+			interest+= Number(object.interest);
+			help+=Number(object.help);
+			practical+= Number(object.practical);
+			quality+= Number(object.quality);
 
 		}
-		console.log(help);
+
+		teachers.find({}, {}, function(err, teachers){
+
+				res.render('adminfeedbackreport', {
+					teachers: teachers,
+					count: students,
+					punctuality: punctuality,
+					delivery: delivery,
+					interest: interest,
+					help: help,
+					practical: practical,
+					quality: quality
+				});
+		});
+
+		
+		
 	});
 });
 

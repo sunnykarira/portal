@@ -71,16 +71,22 @@ block content
                           option(value='#{teacher.title}' type='text') #{teacher.title} ---> #{teacher.branch}
             input.btn.btn-default(name='submit', type='submit', value='Show')
 
-        if teachers
+        if count
+          p Based on #{count} feedbacks
           table.table.table-striped.table-hover.tablestyle
            thead
             tr.info
-              th Id
-              th Name
-              th Branch
+              th Punctuality
+              th Delivery of Lectures
+              th Invoking interest
+              th Help outside class
+              th Practical aspects
+              th Quality of answers
            tbody
-            each teacher, i in teachers
               tr.success
-               td #{teacher._id}
-               td #{teacher.title}
-               td #{teacher.branch}
+               td #{punctuality}
+               td #{delivery}
+               td #{interest}
+               td #{help}
+               td #{practical}
+               td #{quality}
