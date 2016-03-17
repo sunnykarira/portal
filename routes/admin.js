@@ -346,6 +346,12 @@ router.post('/adminindex/report', function(req, res, next){
 
 		}
 
+		var total = 6*5*students;
+		var feedbacktotal = punctuality+delivery+interest+help+practical+quality;
+		var percentage = Math.ceil((feedbacktotal/total) * 100);
+		//console.log(percentage);
+		//return;
+
 		teachers.find({}, {}, function(err, teachers){
 
 				res.render('adminfeedbackreport', {
@@ -356,9 +362,12 @@ router.post('/adminindex/report', function(req, res, next){
 					interest: interest,
 					help: help,
 					practical: practical,
-					quality: quality
+					quality: quality,
+					percentage: percentage
 				});
 		});
+
+
 
 		
 		
