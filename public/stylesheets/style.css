@@ -208,3 +208,33 @@ a {
 .adminindex{
 	margin-top: 30px;
 }
+
+/*Outer Index*/
+
+/*ABOUT*/
+.about{
+padding: 100px 0 100px 0;
+text-align: center;
+
+}
+.about .shift{
+padding-left: 100px;	
+}
+
+.about h1{
+font-size: 1.8em;
+color: #337ab7;
+padding: 0 0 25px;
+}
+
+.about p{
+padding-bottom: 15px;	
+}
+
+/*error*/
+.error{
+padding: 200px 0 200px;	
+}
+.error .img{
+align-content:flex-end;	
+}
