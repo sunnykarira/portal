@@ -2,5 +2,62 @@ extends layout
 
 block content
   !=messages()
-  h1 =title
-  p Welcome to #{title}
+  ul.errors
+     if errors
+       each error, i in errors
+         .alert.alert-dismissible.alert-danger
+            button.close(type='button', data-dismiss='alert') ×
+            #{error.msg}
+
+  #about.about
+      .container
+        .row
+          .col-lg-12.col-md-12.wow.fadeOut
+            h1.heading.wow.lightSpeedIn(data-wow-delay='0.5s') OUR MENTOR
+            h3.mentor.wow.lightSpeedIn(data-wow-delay='0.8s') Dr Charu Gandhi
+            blockquote
+              p.data.wow.lightSpeedIn(data-wow-delay='1.1s')
+                em
+                  | "We all are under her Protege and will always be. She is one of the main pillar of our everlasting motivation and always provided a rigid support.Without her, this project wouldn't haave been possible. "
+                  footer Our Team
+        .row
+          .col-lg-12.col-md-12
+            h1 WHO WE ARE..
+            p  A brief introduction..
+        .row
+          .col-lg-4.col-md-4.wow.fadeIn(data-wow-delay='0.3s')
+            blockquote
+              img.img-circle(src='../images/sunny.jpg', width='100px', height='100px')
+              p
+                em
+                  | "A good engineer"
+                  footer Anant Gupta- Designer
+          .col-lg-4.col-md-4.wow.fadeIn(data-wow-delay='0.7s')
+            blockquote
+              img.img-circle(src='../images/anant.jpg', width='100px', height='100px')
+              p
+                em
+                  | "A good engineer"
+                  footer Sunny karira- Back-end
+          .col-lg-4.col-md-4.wow.fadeIn(data-wow-delay='0.9s')
+            blockquote
+              img.img-circle(src='../images/utkarsh.jpg', width='100px', height='100px')
+              p
+                em
+                  | "A good engineer"
+                  footer Utkarsh Mishra- Back-end
+        .row
+          .shift.col-lg-6.col-md-6.wow.fadeIn(data-wow-delay='1.1s')
+            blockquote
+              img.img-circle(src='../images/nitish.jpg', width='100px', height='100px')
+              p
+                em
+                  | "A good engineer"
+                  footer Nitish Bansal- Back-end
+          .col-lg-6.col-md-6.wow.fadeIn(data-wow-delay='1.3s')
+            blockquote
+              img.img-circle(src='../images/nikhil.jpg', width='100px', height='100px')
+              p
+                em
+                  | "A good engineer"
+                  footer Nikhil Soni- Designer
