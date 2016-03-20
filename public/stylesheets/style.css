@@ -231,10 +231,15 @@ padding: 0 0 25px;
 padding-bottom: 15px;	
 }
 
-/*error*/
-.error{
-padding: 200px 0 200px;	
+/*Footer in outerindex */
+.footer{
+   margin-top: 40px;
+	text-align:center;
+	height:30px;
+	border-top:1px solid #ccc;
 }
-.error .img{
-align-content:flex-end;	
+
+.footer.a{
+	
 }
+
