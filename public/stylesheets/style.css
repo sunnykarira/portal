@@ -243,3 +243,22 @@ padding-bottom: 15px;
 	
 }
 
+/* Formatting for error messages */
+
+ul.success li{
+	padding:15px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border:1px solid transparent;
+	border-radius: 4px;
+	color: #3c763d;
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+	list-style: none;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
