@@ -82,11 +82,15 @@ router.post('/register', function (req, res,next){
 		var sem_year = Number(curr_year) - Number(str);
 		var semester_month = Number(curr_month);
 		var semester;
+		//console.log(now);
+		//console.log(semester_month);
 
 		if(semester_month >= 7){
-			semester = sem_year * 2 + 1;
+			semester = sem_year * 2;
+
 		}else{
 			semester = sem_year * 2;
+
 		}
 
 
