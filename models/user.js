@@ -11,6 +11,9 @@ var UserSchema = mongoose.Schema({
 	type:{
 		type: String
 	},
+	batch: {
+		type: String
+	}
 	branch:{
 		type: String
 	},
