@@ -21,6 +21,12 @@ block content
           .col-md-10
             input#enrollment.form-control(type='text', placeholder='Enrollment Number', name='username')
         .form-group
+          label.col-md-2.control-label(for='batch') Batch
+          .col-md-10
+            select#batch.form-control(name='batch') 
+               each batch, i in batches
+                  option(value='#{batch.title}') #{batch.title}
+        .form-group
           label.col-md-2.control-label(for='branch') Branch
           .col-md-10
             select#branch.form-control(name='branch')
