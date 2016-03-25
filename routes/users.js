@@ -29,6 +29,7 @@ router.post('/register', function (req, res,next){
 	//Get the form values
 	var name = req.body.name;
 	var email = req.body.email;
+	var batch = req.body.batch;
 	var branch = req.body.branch;
 	var username = req.body.username;
 	var password = req.body.password;
@@ -80,7 +81,7 @@ router.post('/register', function (req, res,next){
 		var curr_month = now.substring(8,10);
 		var curr_year = now.substring(13,15);
 		var sem_year = Number(curr_year) - Number(str);
-		var semester_month = Number(curr_month);
+		var semester_month = 5;
 		var semester;
 		//console.log(now);
 		//console.log(semester_month);
@@ -99,6 +100,7 @@ router.post('/register', function (req, res,next){
 			email: email,
 			semester: semester,
 			branch: branch,
+			batch: batch,
 			type: 'normal',
 			username: username,
 			password: password,
