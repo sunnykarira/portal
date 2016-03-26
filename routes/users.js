@@ -14,9 +14,16 @@ var localStrategy = require('passport-local').Strategy;
 
 
 router.get('/register', function(req, res, next){
-	res.render('register', {
-		'title': 'Register'
+
+	var batches = db.get('batch');
+	batches.find({}, {}, function(err, batches){
+		if(err) throw err;
+		res.render('register', {
+		'title': 'Register',
+		'batches': batches
+		});
 	});
+	
 });
 
 router.get('/login', function(req, res, next){
@@ -77,17 +84,16 @@ router.post('/register', function (req, res,next){
 	}else{
 
 		var str = username.substring(2,4);
-		var now = new Date().toString();
-		var curr_month = now.substring(8,10);
+		var now = new Date();
+		var curr_month = now.getMonth();
+		now = now.toString();
 		var curr_year = now.substring(13,15);
 		var sem_year = Number(curr_year) - Number(str);
-		var semester_month = 5;
+		var semester_month = curr_month;
 		var semester;
-		//console.log(now);
-		//console.log(semester_month);
 
 		if(semester_month >= 7){
-			semester = sem_year * 2;
+			semester = sem_year * 2 + 1;
 
 		}else{
 			semester = sem_year * 2;
