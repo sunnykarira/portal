@@ -13,7 +13,7 @@ var UserSchema = mongoose.Schema({
 	},
 	batch: {
 		type: String
-	}
+	},
 	branch:{
 		type: String
 	},
