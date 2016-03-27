@@ -233,18 +233,25 @@ router.get('/adminindex/course', function(req, res, next){
 	var courses = db.get('course');
 	var teachers = db.get('teacher');
 	var semesters = db.get('semester');
+	var batches = db.get('batch');
 	courses.find({}, {}, function(err, courses){
 		//console.log(teachers);
 		teachers.find({}, {}, function(err, teachers){
 			
 			semesters.find({}, {}, function(err, semesters){
-				res.render('adminaddcourse', {
-				title: 'Admin AddCourse',
-				courses: courses,
-				teachers: teachers,
-				semesters: semesters
+
+				batches.find({}, {}, function(err, batches){
+						res.render('adminaddcourse', {
+						title: 'Admin AddCourse',
+						courses: courses,
+						teachers: teachers,
+						semesters: semesters,
+						batches: batches
+
+						});
 
 				});
+				
 			});
 		});
 		
@@ -255,6 +262,7 @@ router.get('/adminindex/course', function(req, res, next){
 router.post('/adminindex/course', function(req, res, next){
 	var number = req.body.number;
 	var title = req.body.title;
+	var batch = req.body.batch;
 	var teacher = req.body.teacher;
 	var branch = req.body.branch;
 	var semester = req.body.semester;
@@ -281,7 +289,7 @@ router.post('/adminindex/course', function(req, res, next){
 	title = title.toLowerCase();
 	title = capitalizeFirstLetter(title);
 
-	courses.find({'title': title, 'number': number, 'branch': branch, 'semester': semester}, {}, function(err, course){
+	courses.find({'number': number, 'branch': branch, 'semester': semester, 'batch': batch}, {}, function(err, course){
 			if(err) throw err;
 			if(course.length != 0){
 				req.flash('info', 'Course already exists, try submitting another course');
@@ -293,6 +301,7 @@ router.post('/adminindex/course', function(req, res, next){
 				"branch": branch,
 				"teacher": teacher,
 				"number": number,
+				"batch": batch,
 				"semester": semester
 				}, function (err, course){
 				if(err){

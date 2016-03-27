@@ -82,6 +82,11 @@ block content
                   each teacher , i in teachers
                      option(value='#{teacher.title}') #{teacher.title} ---> Teacher Branch: #{teacher.branch}
             .form-group
+                label Batch
+                select.form-control(name='batch')
+                  each batch, i in batches
+                     option(value='#{batch.title}') #{batch.title}
+            .form-group
                 label.col-md-2.control-label(for='branch') Branch
                 .col-md-10
                    select#branch.form-control(name='branch')
@@ -98,6 +103,7 @@ block content
               th Course Name
               th Semester
               th Teacher
+              th Batch
               th Branch
            tbody
             each course, i in courses
@@ -107,4 +113,5 @@ block content
                td #{course.title}
                td #{course.semester}
                td #{course.teacher}
+               td #{course.batch}
                td #{course.branch}

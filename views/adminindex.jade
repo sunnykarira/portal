@@ -76,16 +76,20 @@ block content
         thead
           tr.info
             th Id
+            th Enrollment
             th Name
             th Semester
+            th Batch
             th Branch
             th Email
         tbody
           each user, i in users
             tr.success
              td #{user._id}
+             td #{user.username}
              td #{user.name}
              td #{user.semester}
+             td #{user.batch}
              td #{user.branch}
              td #{user.email}
     
