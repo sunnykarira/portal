@@ -136,10 +136,11 @@ router.get('/feedback', function(req, res, next){
 router.post('/feedback', function(req, res, next){
 		//Get the form values
 	var username = req.user.username;
-	var number = req.body.number;
+	//var number = req.body.number;
 	var semester = req.body.semester;
-	var teacher = req.body.teacher;
+	var teacher = req.body.number;
 	var branch = req.body.branch;
+	var batch = req.body.batch;
 	var help = req.body.help;
 	var punctuality = req.body.punctuality;
 	var delivery= req.body.delivery;
@@ -152,8 +153,7 @@ router.post('/feedback', function(req, res, next){
 	var feedbacks = db.get('feedback');
 
 	feedbacks.find({'username': username,
-		'teacher': teacher,
-		'number': number, 'semester': semester}, {}, function(err, feedback){
+		'teacher': teacher, 'semester': semester}, {}, function(err, feedback){
 
 		if(err) throw err;
 		console.log(feedback);
@@ -163,10 +163,10 @@ router.post('/feedback', function(req, res, next){
 		}else{
 			feedbacks.insert({
 				'username': username,
-				'number': number,
 				'help': help,
 				'semester': semester,
 				'branch': branch,
+				'batch': batch,
 				'teacher': teacher,
 				'punctuality': punctuality,
 				'delivery': delivery,

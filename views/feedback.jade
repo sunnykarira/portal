@@ -56,18 +56,16 @@ block content
           fieldset
             legend(align='center') Feeback Form
             .form-group
-                label Course Number:
+                label Course:
                 select.form-control(name='number' type='text')
                    each course, i in courses
-                      option.value(value='#{course.number}') #{course.number} ---> #{course.title}
+                      option.value(value='#{course.teacher}') #{course.number} ---> #{course.title} --> #{course.teacher}
             .form-group
                 label Semester:
                 input.form-control(name='semester', value='#{user.semester}', readonly, type='text')
             .form-group
-                label Teacher
-                select.form-control(name='teacher' type='text')
-                  each teacher , i in teachers
-                     option(value='#{teacher.title}') #{teacher.title} ---> Teacher Branch: #{teacher.branch}
+                label Batch:
+                input.form-control(name='batch', value='#{user.batch}', readonly, type='text')
             .form-group
                 label.col-md-2.control-label(for='branch') Branch
                 .col-md-10
