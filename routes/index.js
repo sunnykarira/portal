@@ -186,5 +186,152 @@ router.post('/feedback', function(req, res, next){
 });
 
 
+router.get('/electivebucket1', function(req, res, next){
+
+	var bucket1 = db.get('bucket1');
+	bucket1.find({}, {}, function(err, courses){
+		var length = courses.length;
+		var array = [];
+		for(i=1; i<=length ;i++){
+			array.push({
+				title: i
+					});
+		}
+		console.log(array);
+			res.render('electivebucket1', {
+			title: 'Bucket 1',
+			courses: courses,
+			length: array
+			});
+	});
+	
+});
+
+
+
+router.post('/electivebucket1', function(req, res, next){
+	var count = 0;
+	var user = req.user;
+	var course = req.body.course;
+	var priority = req.body.priority;
+
+	for(i=0; i<priority.length; i++){
+		for(j=i+1; j<priority.length; j++){
+			if(priority[i] == priority[j]){
+				count++;
+				break;
+			}
+		}
+	}
+
+	if(count > 0){
+		res.redirect('/electivebucket1');
+
+	}else{
+
+		var selectionbucket1 = db.get('selectionbucket1');
+		selectionbucket1.find({_id: user._id}, {}, function(err, bucky){
+			if(bucky.length != 0){
+				req.flash('error', 'Priorities Already Submitted');
+				res.location('/');		
+				res.redirect('/');
+			}else{
+				selectionbucket1.insert({
+				_id: user._id,
+				course: course,
+				priority: priority
+				});
+				req.flash('success', 'Priorities Submitted to admin');
+				res.location('/');
+				res.redirect('/');
+			}
+		});
+
+
+	}
+
+	
+
+});
+
+
+
+
+
+router.get('/electivebucket2', function(req, res, next){
+
+	var bucket1 = db.get('bucket2');
+	bucket1.find({}, {}, function(err, courses){
+		var length = courses.length;
+		var array = [];
+		for(i=1; i<=length ;i++){
+			array.push({
+				title: i
+					});
+		}
+		console.log(array);
+			res.render('electivebucket2', {
+			title: 'Bucket 2',
+			courses: courses,
+			length: array
+			});
+	});
+	
+});
+
+
+router.post('/electivebucket2', function(req, res, next){
+	var count = 0;
+	var user = req.user;
+	var course = req.body.course;
+	var priority = req.body.priority;
+
+	for(i=0; i<priority.length; i++){
+		for(j=i+1; j<priority.length; j++){
+			if(priority[i] == priority[j]){
+				count++;
+				break;
+			}
+		}
+	}
+
+	if(count > 0){
+		res.redirect('/electivebucket2');
+
+	}else{
+
+		var selectionbucket2 = db.get('selectionbucket2');
+		selectionbucket2.find({_id: user._id}, {}, function(err, bucky){
+			if(bucky.length != 0){
+				req.flash('error', 'Priorities Already Submitted');
+				res.location('/');		
+				res.redirect('/');
+			}else{
+				selectionbucket2.insert({
+				_id: user._id,
+				course: course,
+				priority: priority
+				});
+				req.flash('success', 'Priorities Submitted to admin');
+				res.location('/');
+				res.redirect('/');
+			}
+		});
+
+
+	}	
+
+});
+
+router.get('/course', function(req, res, next){
+
+	var course = req.user;
+	console.log(course);
+	return;
+});
+
+
+
+
 
 module.exports = router;

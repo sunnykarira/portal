@@ -24,7 +24,7 @@ block content
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
             li
               a(href='/admin/adminindex/semester')
-                | Students Semester Wise
+                | Semester Wise
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li
               a(href='/admin/adminindex/teacher')
@@ -40,52 +40,49 @@ block content
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | Elective Buckets 
+                | Settings 
                 span.caret
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-cog(style='font-size:16px;')
               ul.dropdown-menu.forAnimate(role='menu')
                 li
-                  a(href='/admin/adminindex/bucket1') Bucket 1
+                  a(href='#') Action
                 li
-                  a(href='/admin/adminindex/bucket2') Bucket 2
+                  a(href='#') Another action
+                li
+                  a(href='#') Something else here
                 li.divider
                 li
-                  a(href='/admin/adminindex/approve') Approve Subjects
+                  a(href='#') Separated link
+                li.divider
+                li
+                  a(href='#') One more separated link
   !=messages()
-  .show
-    if semesters
-      form.well(method='post', action='semester', enctype="multipart/form-data")
-        legend Index
-          .form-group
-            label Semesters
-            select.form-control(name='semester')
-                each semester , i in semesters
-                    option(value='#{semester.title}') B.Tech Semester #{semester.title}
-            label Branch
-            select#branch.form-control(name='branch')
-               option(value='CSE') CSE
-               option(value='ECE') ECE
-            input.btn.btn-default(name='submit', type='Submit' value='Show')
-    if users
-      table.table.table-striped.table-hover.tablestyle
-        thead
-          tr.info
-            th Id
-            th Enrollment
-            th Name
-            th Semester
-            th Batch
-            th Branch
-            th Email
-        tbody
-          each user, i in users
-            tr.success
-             td #{user._id}
-             td #{user.username}
-             td #{user.name}
-             td #{user.semester}
-             td #{user.batch}
-             td #{user.branch}
-             td #{user.email}
-    
-
+     ul.errors
+            if errors
+                each error, i in errors
+                    li.alert.alert-danger #{error.msg}
+        if users
+          table.table.table-striped.table-hover.tablestyle
+           thead
+            tr.info
+              th Id
+              th Name
+              th Enrollment
+              th Branch
+              th Approve
+              th Disapprove
+           tbody
+            each user, i in users
+              tr.success
+               td 
+                 a(href='/admin/adminindex/show/#{user._id}') 
+                    .conatiner #{user._id}
+               td #{user.name}
+               td #{user.username}
+               td #{user.branch}
+               td 
+                  a(href='/admin/adminindex/approve/#{user._id}') 
+                     .container.col-lg-2 Approve
+               td 
+                  a(href='/admin/adminindex/disapprove/#{user._id}')
+                      .container.col-lg-2 Disapprove

@@ -19,6 +19,7 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+
 router.get('/', function(req, res, next){
 	res.redirect('/admin/login');
 });
@@ -113,7 +114,7 @@ router.post('/login', function(req, res, next){
 	});
 });
 
-router.get('/adminindex', function(req, res, next){
+router.get('/adminindex',  function(req, res, next){
 	res.render('adminindex', {
 		title: 'Admin Index',
 		user: admin.name
@@ -382,6 +383,246 @@ router.post('/adminindex/report', function(req, res, next){
 		
 	});
 });
+
+
+router.get('/adminindex/bucket1', function(req, res, next){
+
+		var courses = db.get('bucket1');
+		courses.find({}, {}, function(err, courses){
+
+			res.render('adminbucket1', {
+				courses: courses
+			});
+		});
+		
+});
+
+router.post('/adminindex/bucket1', function(req, res, next){
+
+	var title = req.body.title;
+	var number = req.body.number;
+	var branch = req.body.branch;
+	var semester = req.body.semester;
+
+	req.checkBody('title', 'Title Field is required').notEmpty();
+	req.checkBody('branch', 'Branch Field is required').notEmpty();
+	req.checkBody('number', 'Number Field is required').notEmpty();
+	req.checkBody('semester', 'semester Field is required').notEmpty();
+
+	var errors = req.validationErrors();
+
+	var courses = db.get('bucket1');
+	if(errors){
+		res.render('adminbucket1', {
+			number: number,
+			title: title
+		});
+	}else{
+
+		courses.find({ number: number}, {}, function(err, course){
+
+			if(course.length != 0){
+				req.flash('error', 'Course already submitted');
+				res.redirect('/admin/adminindex/bucket1');
+			}else{
+
+				courses.insert({
+					title: title,
+					number: number,
+					branch: branch,
+					semester: semester
+				});
+
+				req.flash('success', 'Course submitted');
+				res.location('/admin/adminindex/bucket1');
+				res.redirect('/admin/adminindex/bucket1');
+			}
+		})
+
+	}
+});
+
+
+router.get('/adminindex/bucket2', function(req, res, next){
+
+		var courses = db.get('bucket2');
+		courses.find({}, {}, function(err, courses){
+
+			res.render('adminbucket2', {
+				courses: courses
+			});
+		});
+		
+});
+
+router.post('/adminindex/bucket2', function(req, res, next){
+
+	var title = req.body.title;
+	var number = req.body.number;
+	var branch = req.body.branch;
+	var semester = req.body.semester;
+
+	req.checkBody('title', 'Title Field is required').notEmpty();
+	req.checkBody('branch', 'Branch Field is required').notEmpty();
+	req.checkBody('number', 'Branch Field is required').notEmpty();
+
+	var errors = req.validationErrors();
+	var courses = db.get('bucket2');
+	if(errors){
+		res.render('adminbucket2', {
+			number: number,
+			title: title
+		});
+	}else{
+
+		courses.find({number: number}, {}, function(err, course){
+
+			if(course.length != 0){
+				req.flash('error', 'Course already submitted');
+				res.redirect('/admin/adminindex/bucket2');
+			}else{
+
+				courses.insert({
+					title: title,
+					number: number,
+					branch: branch,
+					semester: semester
+				});
+
+				req.flash('success', 'Course submitted');
+				res.location('/admin/adminindex/bucket2');
+				res.redirect('/admin/adminindex/bucket2');
+			}
+		})
+
+	}
+});
+
+var courseselect = [];
+
+router.get('/adminindex/show/:id', function(req, res, next){
+	var userid = req.params.id;
+
+	var bucket1 = db.get('selectionbucket1');
+	var bucket2 = db.get('selectionbucket2');
+	var i;
+	var yo;
+	bucket1.find({_id: userid} , {}, function(err, bucket1details){
+		if(bucket1details.length==0){
+			req.flash('info', 'User already approved');
+			res.redirect('/admin/adminindex/approve');
+		}else{
+			var priority = bucket1details[0].priority;
+			i = priority.indexOf('1');
+			yo = bucket1details[0].course[i].toString();
+			courseselect.push(yo);
+
+			bucket2.find({_id: userid}, {}, function(err, bucket2details){
+					priority = bucket2details[0].priority;
+					i = priority.indexOf('1');
+					yo = bucket2details[0].course[i].toString();
+					courseselect.push(yo);
+					
+
+					res.render('show', {
+						courses: courseselect
+					});
+			});
+
+		}
+		
+	});
+});
+
+router.get('/adminindex/approve/:id', function(req, res, next){
+	var userid = req.params.id;
+	var users = db.get('users');
+
+	var bucket1 = db.get('selectionbucket1');
+	bucket1.find({_id: userid} , {}, function(err, bucket1details){
+		if(bucket1details.length==0){
+			req.flash('info', 'User already approved');
+			res.redirect('/admin/adminindex/approve');
+		}else{
+
+
+		 for(i=0; i<courseselect.length; i++){
+
+			users.update({
+				_id: userid
+			}, {
+				$push: {
+					'course': courseselect[i]
+				}
+			});
+
+		}
+
+			delete courseselect;
+			var bucket1 = db.get('selectionbucket1');
+			var bucket2 = db.get('selectionbucket2');
+			bucket1.remove({_id: userid});
+			bucket2.remove({_id: userid});
+
+			
+
+			req.flash('success', 'Course Approved');
+			res.location('/admin/adminindex/approve');
+			res.redirect('/admin/adminindex/approve');
+
+
+		}
+})
+
+
+});
+
+
+router.get('/adminindex/disapprove/:id', function(req, res, next){
+	var userid = req.params.id;
+	var users = db.get('users');
+
+	var bucket1 = db.get('selectionbucket1');
+	bucket1.find({_id: userid} , {}, function(err, bucket1details){
+		if(bucket1details.length==0){
+			req.flash('info', 'User already disapproved');
+			res.redirect('/admin/adminindex/approve');
+		}else{
+
+
+			var bucket1 = db.get('selectionbucket1');
+			var bucket2 = db.get('selectionbucket2');
+			bucket1.remove({_id: userid});
+			bucket2.remove({_id: userid});
+
+			
+
+			req.flash('success', 'Course Approved');
+			res.location('/admin/adminindex/approve');
+			res.redirect('/admin/adminindex/approve');
+
+
+		}
+})
+
+
+});
+
+router.get('/adminindex/approve', function(req, res, next){
+
+	var selectionbucket1 = db.get('selectionbucket1');
+	var selectionbucket2 = db.get('selectionbucket2');
+	var users = db.get('users');
+	var object;
+	users.find({type:'normal', semester: '6'}, {}, function(err, users){
+		res.render('adminapprove', {
+			title: 'Approve',
+			users: users
+		});
+		
+	});
+});
+
 
 
 router.get('/logout', function(req, res, next){

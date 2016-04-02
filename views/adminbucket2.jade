@@ -24,7 +24,7 @@ block content
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
             li
               a(href='/admin/adminindex/semester')
-                | Students Semester Wise
+                | Semester Wise
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li
               a(href='/admin/adminindex/teacher')
@@ -48,44 +48,49 @@ block content
                   a(href='/admin/adminindex/bucket1') Bucket 1
                 li
                   a(href='/admin/adminindex/bucket2') Bucket 2
-                li.divider
                 li
-                  a(href='/admin/adminindex/approve') Approve Subjects
+                  a(href='/admin/adminindex/bucket3') Bucket 3
   !=messages()
-  .show
-    if semesters
-      form.well(method='post', action='semester', enctype="multipart/form-data")
-        legend Index
-          .form-group
-            label Semesters
-            select.form-control(name='semester')
-                each semester , i in semesters
-                    option(value='#{semester.title}') B.Tech Semester #{semester.title}
-            label Branch
-            select#branch.form-control(name='branch')
-               option(value='CSE') CSE
-               option(value='ECE') ECE
-            input.btn.btn-default(name='submit', type='Submit' value='Show')
-    if users
-      table.table.table-striped.table-hover.tablestyle
-        thead
-          tr.info
-            th Id
-            th Enrollment
-            th Name
-            th Semester
-            th Batch
-            th Branch
-            th Email
-        tbody
-          each user, i in users
-            tr.success
-             td #{user._id}
-             td #{user.username}
-             td #{user.name}
-             td #{user.semester}
-             td #{user.batch}
-             td #{user.branch}
-             td #{user.email}
-    
+     ul.errors
+            if errors
+                each error, i in errors
+                    li.alert.alert-danger #{error.msg}
+        form.well(method='post', action='bucket2', enctype="multipart/form-data")
+         legend Add Course
+            .form-group
+                label Course Number:
+                input.form-control(name='number', type='text')
+            .form-group
+                label Course Name:
+                input.form-control(name='title', type='text')
+            .form-group
+                label.col-md-2.control-label(for='branch') Branch
+                .col-md-10
+                   select#branch.form-control(name='branch')
+                      option(value='CSE') CSE
+                      option(value='ECE') ECE
+            .form-group
+                label.col-md-2.control-label(for='semester') Semester
+                .col-md-10
+                   select#semester.form-control(name='semester')
+                      option(value='6') Semester 6
+                      option(value='7') Semester 7
+            input.btn.btn-default(name='submit', type='submit', value='Save')
 
+        if courses
+          table.table.table-striped.table-hover.tablestyle
+           thead
+            tr.info
+              th Id
+              th Number
+              th Name
+              th Branch
+              th Semester
+           tbody
+            each course, i in courses
+              tr.success
+               td #{course._id}
+               td #{course.number}
+               td #{course.title}
+               td #{course.branch}
+               td #{course.semester}

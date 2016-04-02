@@ -40,22 +40,16 @@ block content
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | Settings 
+                | Elective Buckets
                 span.caret
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-cog(style='font-size:16px;')
               ul.dropdown-menu.forAnimate(role='menu')
                 li
-                  a(href='#') Action
+                  a(href='/admin/adminindex/bucket1') Bucket 1
                 li
-                  a(href='#') Another action
+                  a(href='/admin/adminindex/bucket2') Bucket 2
                 li
-                  a(href='#') Something else here
-                li.divider
-                li
-                  a(href='#') Separated link
-                li.divider
-                li
-                  a(href='#') One more separated link
+                  a(href='/admin/adminindex/bucket3') Bucket 3
   !=messages()
      ul.errors
             if errors

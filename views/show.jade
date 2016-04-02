@@ -1,0 +1,19 @@
+extends adminlayout
+
+
+block content
+  !=messages()
+  ul.errors
+       if errors
+           each error, i in errors
+               li.alert.alert-danger #{error.msg}
+
+  if courses
+     table.table.table-striped.table-hover.tablestyle
+           thead
+            tr.info
+              th Course
+           tbody
+            each course, i in courses
+              tr.success
+               td #{course.title}
