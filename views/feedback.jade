@@ -20,31 +20,21 @@ block content
                 | Home
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-home(style='font-size:16px;')
             li
-              a(href='#')
-                | Elective Selection
-                span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-user(style='font-size:16px;')
-            li
               a(href='/feedback')
                 | Feedback
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | Settings 
+                | Elective Buckets
                 span.caret
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-cog(style='font-size:16px;')
               ul.dropdown-menu.forAnimate(role='menu')
                 li
-                  a(href='#') Action
+                  a(href='/electivebucket1') Bucket 1
                 li
-                  a(href='#') Another action
+                  a(href='/electivebucket2') Bucket 2
                 li
-                  a(href='#') Something else here
-                li.divider
-                li
-                  a(href='#') Separated link
-                li.divider
-                li
-                  a(href='#') One more separated link
+                  a(href='/course') Approved Courses
   
   !=messages()
   .container.well

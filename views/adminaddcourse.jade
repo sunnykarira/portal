@@ -40,7 +40,7 @@ block content
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-envelope(style='font-size:16px;')
             li.dropdown
               a.dropdown-toggle(href='#', data-toggle='dropdown')
-                | Elective Buckets
+                | Elective Buckets 
                 span.caret
                 span.pull-right.hidden-xs.showopacity.glyphicon.glyphicon-cog(style='font-size:16px;')
               ul.dropdown-menu.forAnimate(role='menu')
@@ -48,8 +48,9 @@ block content
                   a(href='/admin/adminindex/bucket1') Bucket 1
                 li
                   a(href='/admin/adminindex/bucket2') Bucket 2
+                li.divider
                 li
-                  a(href='/admin/adminindex/bucket3') Bucket 3
+                  a(href='/admin/adminindex/approve') Approve Subjects
   !=messages()
      ul.errors
             if errors

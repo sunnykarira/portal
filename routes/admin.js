@@ -515,13 +515,13 @@ router.get('/adminindex/show/:id', function(req, res, next){
 			var priority = bucket1details[0].priority;
 			i = priority.indexOf('1');
 			yo = bucket1details[0].course[i].toString();
-			courseselect.push(yo);
+			courseselect.push({title: yo});
 
 			bucket2.find({_id: userid}, {}, function(err, bucket2details){
 					priority = bucket2details[0].priority;
 					i = priority.indexOf('1');
 					yo = bucket2details[0].course[i].toString();
-					courseselect.push(yo);
+					courseselect.push({title: yo});
 					
 
 					res.render('show', {

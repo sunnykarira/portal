@@ -224,7 +224,7 @@ router.post('/electivebucket1', function(req, res, next){
 		}
 	}
 
-	if(count > 0){
+	if(count > 0 && req.user.course.length !=0){
 		res.redirect('/electivebucket1');
 
 	}else{
@@ -295,7 +295,7 @@ router.post('/electivebucket2', function(req, res, next){
 		}
 	}
 
-	if(count > 0){
+	if(count > 0 && req.user.course.length !=0){
 		res.redirect('/electivebucket2');
 
 	}else{
