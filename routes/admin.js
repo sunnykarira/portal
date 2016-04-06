@@ -498,7 +498,8 @@ router.post('/adminindex/bucket2', function(req, res, next){
 	}
 });
 
-var courseselect = [];
+var courseselect = {};
+
 
 router.get('/adminindex/show/:id', function(req, res, next){
 	var userid = req.params.id;
@@ -507,6 +508,7 @@ router.get('/adminindex/show/:id', function(req, res, next){
 	var bucket2 = db.get('selectionbucket2');
 	var i;
 	var yo;
+	courseselect.array = [];
 	bucket1.find({_id: userid} , {}, function(err, bucket1details){
 		if(bucket1details.length==0){
 			req.flash('info', 'User already approved');
@@ -515,17 +517,16 @@ router.get('/adminindex/show/:id', function(req, res, next){
 			var priority = bucket1details[0].priority;
 			i = priority.indexOf('1');
 			yo = bucket1details[0].course[i].toString();
-			courseselect.push({title: yo});
+			courseselect.array.push({title: yo});
 
 			bucket2.find({_id: userid}, {}, function(err, bucket2details){
 					priority = bucket2details[0].priority;
 					i = priority.indexOf('1');
 					yo = bucket2details[0].course[i].toString();
-					courseselect.push({title: yo});
+					courseselect.array.push({title: yo});
 					
-
 					res.render('show', {
-						courses: courseselect
+						courses: courseselect.array
 					});
 			});
 
@@ -545,16 +546,18 @@ router.get('/adminindex/approve/:id', function(req, res, next){
 			res.redirect('/admin/adminindex/approve');
 		}else{
 
+		
 
-		 for(i=0; i<courseselect.length; i++){
+		 for(i=0; i<courseselect.array.length; i++){
 
 			users.update({
 				_id: userid
 			}, {
 				$push: {
-					'course': courseselect[i]
+					'course': courseselect.array[i].title
 				}
 			});
+			//users.insert({_id: userid}, );
 
 		}
 

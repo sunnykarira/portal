@@ -115,7 +115,7 @@ router.post('/', function (req, res, next){
 });
 
 
-router.get('/feedback', function(req, res, next){
+router.get('/feedback', ensureAuthenticated, function(req, res, next){
 	var user = req.user;
 	var semester = req.user.semester;
 	var batch = req.user.batch;
@@ -133,7 +133,7 @@ router.get('/feedback', function(req, res, next){
 	
 });
 
-router.post('/feedback', function(req, res, next){
+router.post('/feedback',ensureAuthenticated, function(req, res, next){
 		//Get the form values
 	var username = req.user.username;
 	//var number = req.body.number;
@@ -186,7 +186,7 @@ router.post('/feedback', function(req, res, next){
 });
 
 
-router.get('/electivebucket1', function(req, res, next){
+router.get('/electivebucket1',ensureAuthenticated, function(req, res, next){
 
 	var bucket1 = db.get('bucket1');
 	bucket1.find({}, {}, function(err, courses){
@@ -209,7 +209,7 @@ router.get('/electivebucket1', function(req, res, next){
 
 
 
-router.post('/electivebucket1', function(req, res, next){
+router.post('/electivebucket1', ensureAuthenticated, function(req, res, next){
 	var count = 0;
 	var user = req.user;
 	var course = req.body.course;
@@ -224,7 +224,7 @@ router.post('/electivebucket1', function(req, res, next){
 		}
 	}
 
-	if(count > 0 && req.user.course.length !=0){
+	if(count > 0){
 		res.redirect('/electivebucket1');
 
 	}else{
@@ -258,7 +258,7 @@ router.post('/electivebucket1', function(req, res, next){
 
 
 
-router.get('/electivebucket2', function(req, res, next){
+router.get('/electivebucket2', ensureAuthenticated, function(req, res, next){
 
 	var bucket1 = db.get('bucket2');
 	bucket1.find({}, {}, function(err, courses){
@@ -280,7 +280,7 @@ router.get('/electivebucket2', function(req, res, next){
 });
 
 
-router.post('/electivebucket2', function(req, res, next){
+router.post('/electivebucket2', ensureAuthenticated,function(req, res, next){
 	var count = 0;
 	var user = req.user;
 	var course = req.body.course;
@@ -295,7 +295,7 @@ router.post('/electivebucket2', function(req, res, next){
 		}
 	}
 
-	if(count > 0 && req.user.course.length !=0){
+	if(count > 0){
 		res.redirect('/electivebucket2');
 
 	}else{
@@ -323,11 +323,29 @@ router.post('/electivebucket2', function(req, res, next){
 
 });
 
-router.get('/course', function(req, res, next){
+router.get('/course', ensureAuthenticated, function(req, res, next){
 
-	var course = req.user;
-	console.log(course);
-	return;
+	var users = db.get('users');
+	var course;
+	var object = [];
+	users.find({_id: req.user._id}, {}, function(err, user){
+		
+		for(i=0; i<user.length; i++){
+			course = user[0].course;
+
+				for(j=0; j<course.length; j++){
+					var yo = course[j];
+					object.push({'title': yo});
+				}
+
+				res.render('indexshow',{
+					courses: object
+				})
+			}
+			
+	});
+	
+
 });
 
 
