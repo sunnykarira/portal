@@ -84,47 +84,64 @@ router.post('/register', function (req, res,next){
 		});
 	}else{
 
-		var str = username.substring(2,4);
-		var now = new Date();
-		var curr_month = now.getMonth();
-		now = now.toString();
-		var curr_year = now.substring(13,15);
-		var sem_year = Number(curr_year) - Number(str);
-		var semester_month = curr_month;
-		var semester;
+		var users = db.get('users');
 
-		if(semester_month >= 7){
-			semester = sem_year * 2 + 1;
+		users.find({'username': username},{}, function(err, user){
 
-		}else{
-			semester = sem_year * 2;
+			if(user.length !=0) {
+				req.flash('info','User Already exists');
+				res.location('/users/register');
+				res.redirect('/users/register');
+			}else{
 
-		}
+				var str = username.substring(2,4);
+				var now = new Date();
+				var curr_month = now.getMonth();
+				now = now.toString();
+				var curr_year = now.substring(13,15);
+				var sem_year = Number(curr_year) - Number(str);
+				var semester_month = curr_month;
+				var semester;
+
+				if(semester_month >= 7){
+					semester = sem_year * 2 + 1;
+
+				}else{
+					semester = sem_year * 2;
+
+				}
 
 
-		var newUser = new User({
-			name: name,
-			email: email,
-			semester: semester,
-			branch: branch,
-			batch: batch,
-			type: 'normal',
-			username: username,
-			password: password,
-			profileimage: profileImageName
+				var newUser = new User({
+					name: name,
+					email: email,
+					semester: semester,
+					branch: branch,
+					batch: batch,
+					type: 'normal',
+					username: username,
+					password: password,
+					profileimage: profileImageName
+				});
+
+				// Create User
+				User.createUser(newUser, function (err, user){
+					if(err) throw err;
+					console.log(user);
+
+				});
+
+				//Success Message
+				req.flash('success', 'You are now registered and may log in');
+				res.location('/');
+				res.redirect('/');
+
+			}
+
 		});
 
-		// Create User
-		User.createUser(newUser, function (err, user){
-			if(err) throw err;
-			console.log(user);
 
-		});
-
-		//Success Message
-		req.flash('success', 'You are now registered and may log in');
-		res.location('/');
-		res.redirect('/');
+		
 
 	}
 

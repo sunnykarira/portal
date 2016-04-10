@@ -600,7 +600,7 @@ router.get('/adminindex/disapprove/:id', function(req, res, next){
 
 			
 
-			req.flash('success', 'Course Approved');
+			req.flash('success', 'Course Disapproved');
 			res.location('/admin/adminindex/approve');
 			res.redirect('/admin/adminindex/approve');
 

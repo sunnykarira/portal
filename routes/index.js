@@ -189,7 +189,7 @@ router.post('/feedback',ensureAuthenticated, function(req, res, next){
 router.get('/electivebucket1',ensureAuthenticated, function(req, res, next){
 
 	var bucket1 = db.get('bucket1');
-	bucket1.find({}, {}, function(err, courses){
+	bucket1.find({branch: req.user.branch}, {}, function(err, courses){
 		var length = courses.length;
 		var array = [];
 		for(i=1; i<=length ;i++){
@@ -261,7 +261,7 @@ router.post('/electivebucket1', ensureAuthenticated, function(req, res, next){
 router.get('/electivebucket2', ensureAuthenticated, function(req, res, next){
 
 	var bucket1 = db.get('bucket2');
-	bucket1.find({}, {}, function(err, courses){
+	bucket1.find({branch: req.user.branch}, {}, function(err, courses){
 		var length = courses.length;
 		var array = [];
 		for(i=1; i<=length ;i++){
